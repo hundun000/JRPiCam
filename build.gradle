@@ -33,6 +33,18 @@ task fatJAR(type: Jar) {
 }
 
 // Demo View JAR file task
+task cameraAppJAR(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Camera App',
+                'Implementation-Version': version,
+                'Main-Class': 'com.hopding.jrpicam.CameraApp'
+    }
+    baseName = 'Camera-App'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with fatJAR
+}
+
+// Demo View JAR file task
 task demoViewJAR(type: Jar) {
     manifest {
         attributes 'Implementation-Title': 'Demo View',
@@ -82,7 +94,9 @@ task shootTimelapseJAR(type: Jar) {
 
 // Task to generate/build the four example JAR files
 task buildExamples (dependsOn: [
-        'demoViewJAR',
-        'shootBufferedStillJAR',
-        'shootStillJAR',
-        'shootTimelapseJAR'])
+        'cameraAppJAR'
+//        'demoViewJAR',
+//        'shootBufferedStillJAR',
+//        'shootStillJAR',
+//       'shootTimelapseJAR'
+        ])
